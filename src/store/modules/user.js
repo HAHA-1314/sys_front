@@ -34,8 +34,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         if(response.code != 200) {reject(error)}
-        const { data } = response.data
-        commit('SET_TOKEN', data.tokenValue)
+        const { data } = response;
+        // console.log('data.tokenValue',data.tokenValue); //debug 不能显示token！！
+        commit('SET_TOKEN', data.tokenValue);
         setToken(data.tokenValue)
         resolve()
       }).catch(error => {
@@ -45,25 +46,25 @@ const actions = {
   },
 
   // get user info 本地mock API 
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
+  // getInfo({ commit, state }) {
+  //   return new Promise((resolve, reject) => {
+  //     getInfo(state.token).then(response => {
+  //       const { data } = response
 
-        if (!data) {
-          return reject('用户验证失败，请重新登录')
-        }
+  //       if (!data) {
+  //         return reject('用户验证失败，请重新登录')
+  //       }
 
-        const { name, avatar } = data
+  //       const { name, avatar } = data
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
+  //       commit('SET_NAME', name)
+  //       commit('SET_AVATAR', avatar)
+  //       resolve(data)
+  //     }).catch(error => {
+  //       reject(error)
+  //     })
+  //   })
+  // },
 
   // user logout
   logout({ commit, state }) {
@@ -93,8 +94,14 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       register({ username: username.trim(), password: password }).then(response => {
-        if(response.code != 200) {reject(error)}
-        resolve()
+        if (response.code != 200) { reject(error) }
+        if (response.msg == '注册成功') {
+          resolve();
+        }
+        else {
+          alert(response.msg);
+          reject(response.msg);
+        }
       }).catch(error => {
         reject(error)
       })

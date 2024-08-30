@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";np
 const path = require("path");
 const defaultSettings = require("./src/settings.js");
 
@@ -18,24 +18,13 @@ const port = process.env.port || process.env.npm_config_port || 8087; // dev por
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   devServer: {
-    host: "localhost", //本地地址
-    port: "8080", //端口号
-    hot: true, //热更新自动刷新
-    open: true, //自动打开
-    overlay: {
-      //当出现编译错误或警告时，在浏览器中显示全屏覆盖。只显示错误信息不提示警告情况限制是
-      warning: false,
-      error: true,
-    },
+    port,
     proxy: {
       "/api": {
-        target: "http://47.121.210.228:8080", //代理地址 凡是使用/api
+        //http://36.141.24.254:8087
+        target: "http://36.141.24.254:8087", //代理地址 凡是使用/api
         changeOrigin: true, //允许跨域请求
-        secure: false,
-        pathRewrite: {
-          //重写路径 替换请求地址中的指定路径
-          ["^/api"]: "/", //将请求地址中的api替换为空
-        },
+        pathRewrite: { "^/api": "" }, //将所有含/api路径的，去掉/api转发给服务器
       },
     },
   },
