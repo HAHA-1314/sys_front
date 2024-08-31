@@ -22,7 +22,10 @@ module.exports = {
     proxy: {
       "/api": {
         //http://36.141.24.254:8087
-        target: "http://36.141.24.254:8087", //代理地址 凡是使用/api
+        //https://test.bugbuilder.top
+        //http://36.141.24.215:8087
+        //http://111.230.19.52:8080
+        target: "http://111.230.19.52", //代理地址 凡是使用/api
         changeOrigin: true, //允许跨域请求
         pathRewrite: { "^/api": "" }, //将所有含/api路径的，去掉/api转发给服务器
       },
